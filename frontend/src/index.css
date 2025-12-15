@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bleached-950 text-white;
+    font-family: 'Source Serif Pro', serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  /* Prevent zoom on input focus on mobile devices (iOS Safari zooms if font-size < 16px) */
+  @media (max-width: 639px) {
+    input,
+    textarea,
+    select {
+      font-size: 16px !important;
+    }
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-bleached-900/50 backdrop-blur-md border border-bleached-700/30;
+  }
+  
+  .glass-strong {
+    @apply bg-bleached-900/70 backdrop-blur-lg border border-bleached-600/40;
+  }
+  
+  .glass-light {
+    @apply bg-bleached-800/30 backdrop-blur-sm border border-bleached-700/20;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-bleached-200 to-bleached-400;
+  }
+  
+  .text-elegant {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .status-pending {
+    @apply text-status-yellow;
+  }
+  
+  .status-confirmed {
+    @apply text-status-green;
+  }
+  
+  .status-cancelled {
+    @apply text-status-purple;
+  }
+  
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 15s ease infinite;
+  }
+  
+  @keyframes gradient {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
+
