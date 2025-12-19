@@ -20,4 +20,8 @@ async def register(status: booking.BookingStatus,
     register = await admin_service.update_booking_status(booking_id=booking_id, status=status)
     return register
 
-
+@router.get('/booking/analytics',response_model=schema.BaseResponse[admin.Analysis] )
+async def register(admin_service: AdminService = Depends(get_admin_service)):
+    
+    register = await admin_service.analysis_()
+    return register

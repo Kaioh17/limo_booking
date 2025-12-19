@@ -21,7 +21,7 @@ class UserService:
                 _password = self._password(user_[0]['id'])[0]['password']
                 if _password is not None:
                     raise HTTPException(status_code=status.HTTP_306_RESERVED,
-                                        detail="User with email and password already exists. Try Login..")
+                                        detail="User with email already exists. Try Login..")
                 else: 
 
                     user = self.supa.table(self.TABLE).update({**data, "password": hash_password}).eq("id", user_[0]['id']).execute()

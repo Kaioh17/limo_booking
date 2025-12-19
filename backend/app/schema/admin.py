@@ -21,6 +21,11 @@ class RegisterAdmin(BaseModel):
         if not re.search(r'\d', v):
             raise ValueError('Password must contain at least one number')
         return v
+    
+class Analysis(BaseModel):
+    total_bookings: int
+    total_revenue: float
+    completed_rides: int
 class RegisterResponse(BaseModel):
     id: UUID =(...)
     first_name: str = (...)

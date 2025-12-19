@@ -180,15 +180,16 @@ class BookingService:
         return total_price
     def get_book(self, id: str = None):
         try:
-            helper_service.ValidateUser(supa=self.supa)._ensure_admin(current_user=self.current_user)
 
             if id:
                 # user_id = self.current_user['id']
                 
-                query = self.supa.table(self.TABLE).select("*, users(*)").eq('id', id).execute()
+                query = self.supa.table(self.TABLE).select("*, users(*)").eq('id', id).order('created_at', desc = True).execute()
                 booking_data = query.data[0]
                 
             else:
+                helper_service.ValidateUser(supa=self.supa)._ensure_admin(current_user=self.current_user)
+                
                 # logger.debug("I am in here")
                 query = self.supa.table(self.TABLE).select("*, users(*)").order('created_at', desc = True).execute()
                 booking_data = query.data
@@ -207,11 +208,11 @@ class BookingService:
     def get_all_bookings(self, booking_id = None):
         
         try:
-            
+            role = self.current_user['role']
             if booking_id:
                 # logger.debug(f"I am in here looking for {booking_id}")
                 
-                query = self.supa.table(self.TABLE).select("*, users(*)").eq('id', booking_id).execute()
+                query = self.supa.table(self.TABLE).select("*, users(*)").eq('id', booking_id).order('created_at', desc = True).execute()
                 booking_data = query.data
                 
                 if booking_data == []:
@@ -219,7 +220,14 @@ class BookingService:
                     raise HTTPException(status_code=404, detail="There is no bookings at this id")
                 booking_data = booking_data[0]
                 
-                    
+            elif role == "rider":
+                query = self.supa.table(self.TABLE).select("*, users(*)").eq('user_id', self.current_user['id']).order('created_at', desc = True).execute()
+                booking_data = query.data
+                
+                if booking_data == []:
+                    logger.debug("There is no bookings at this id")
+                    raise HTTPException(status_code=404, detail="There is no bookings at this id")    
+                
             else: 
                 # logger.debug("I am in here")
                 helper_service.ValidateUser(self.supa)._ensure_admin(current_user=self.current_user)

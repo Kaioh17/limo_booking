@@ -18,7 +18,8 @@ class AirportType(str, Enum):
 class BookingStatus(str, Enum):
     active = 'active'
     pending = 'pending'
-    completed = 'completed'
+    completed = 'completed' 
+    cancelled = 'cancelled'
 ##TODO if each service demands more unique fields
 class DropOff(BaseModel):
     pickup_location: Optional[str] = Field(...)
